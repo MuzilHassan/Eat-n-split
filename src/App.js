@@ -52,6 +52,7 @@ export default function App() {
           friends={friends}
           setSelected={setSelected}
           setFriends={setFriends}
+          key={slectedFriend.id}
         />
       )}
     </div>
@@ -75,6 +76,7 @@ function FriendsList({ initialFriends, setSelected }) {
   );
 }
 function Friend({ name, image, balance, friend, setSelected }) {
+  const [flag, setFlag] = useState(false);
   return (
     <li>
       <img src={image} />
@@ -86,9 +88,27 @@ function Friend({ name, image, balance, friend, setSelected }) {
           ? `You and ${name} are even`
           : `You owe ${name} ${Math.abs(balance)}$`}
       </p>
-      <button className="button" onClick={() => setSelected(friend)}>
-        Select
-      </button>
+      {flag ? (
+        <button
+          className="button"
+          onClick={() => {
+            setSelected(null);
+            setFlag(false);
+          }}
+        >
+          Close
+        </button>
+      ) : (
+        <button
+          className="button"
+          onClick={() => {
+            setSelected(friend);
+            setFlag(true);
+          }}
+        >
+          Select
+        </button>
+      )}
     </li>
   );
 }
